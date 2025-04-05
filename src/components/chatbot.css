@@ -1,0 +1,48 @@
+.finan-dash {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background: linear-gradient(to right, #1a1a1a, #3a0e0e);
+    color: white;
+    padding: 40px;
+  }
+  
+  .content {
+    max-width: 800px;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 30px;
+  }
+  
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .button-group button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 250px;
+    align-self: center;
+  }
+  
+  .button-group button:hover {
+    background-color: #c9302c;
+  }
+  

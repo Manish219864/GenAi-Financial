@@ -1,0 +1,13 @@
+.signup-container {
+    background-color: #1a1a2e;
+    min-height: 100vh;
+  }
+  
+  .signup-box {
+    background-color: #3a3a4e;
+    max-width: 400px;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  

@@ -1,0 +1,21 @@
+.dashboard-container {
+    background: radial-gradient(circle, rgba(94, 9, 9, 0.9), black);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px;
+  }
+  
+  .content {
+    text-align: left;
+    max-width: 500px;
+  }
+  
+  .chart-container {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
