@@ -1,0 +1,21 @@
+/* Set the page background to black */
+body, .market-insights-wrapper {
+    background-color: #000; /* black background for the page */
+    min-height: 100vh;
+    padding: 2rem 0;
+  }
+  
+  /* Keep the table red and styled */
+  .table {
+    background-color: #8B0000 !important; /* Dark red background */
+    color: white;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  /* Optional: Make headings stand out */
+  .table-dark th {
+    background-color: #b30000; /* Bright red header */
+    color: #fff;
+  }
+  

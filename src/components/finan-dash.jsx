@@ -23,12 +23,10 @@ const FinanDashboard = () => {
         <p className="text-white">Manage your finances with AI-driven insights.</p>
         
         {/* Buttons for navigation */}
-        <button className="btn btn-light me-2" onClick={() => navigate("/login")}>
+        <button className="btn btn-light me-2" onClick={() => navigate("/Signup")}>
           Get Started
         </button>
-        <button className="btn btn-outline-light" onClick={() => navigate("/signup")}>
-          Sign Up
-        </button>
+
       </div>
 
       <div className="chart-container">

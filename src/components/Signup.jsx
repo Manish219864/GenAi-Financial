@@ -1,112 +1,118 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./Signup.css"
-function Signup() {
-  const [profilePic, setProfilePic] = useState(null);
-  const navigate = useNavigate(); // Initialize navigation
+import "./Signup.css";
+import axios from "../axios";
 
-  // Handle file upload
-  const handleFileChange = (e) => {
-    setProfilePic(URL.createObjectURL(e.target.files[0]));
+const Signup = () => {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    phone: "",
+    profilePic: null,
+    agree: false,
+  });
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value, type, checked, files } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : type === "file" ? files[0] : value,
+    });
   };
 
-  // Handle Signup and Navigate to Dashboard
-  const handleSignup = (event) => {
-    event.preventDefault();
-    // Perform signup logic (store user data, validate, etc.)
-    
-    // Redirect to Dashboard after successful signup
-    navigate("/dashboard");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.agree) {
+      alert("You must agree to the terms & conditions.");
+      return;
+    }
+
+    const data = new FormData();
+    Object.keys(formData).forEach((key) => {
+      if (key !== "agree") {
+        data.append(key, formData[key]);
+      }
+    });
+
+    try {
+      await axios.post("/api/signup", data);
+      alert("Signup successful!");
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+      alert("Signup failed!");
+    }
   };
 
   return (
-    <div
-      className="vh-100 d-flex align-items-center"
-      style={{ background: "black", color: "white" }}
-    >
-      <div className="container">
-        <div className="row align-items-center">
-          {/* Left Side - Welcome Message */}
-          <div className="col-md-6 text-center">
-            <h1 className="display-3 fw-bold">Create Your Account</h1>
-          </div>
+    <div className="signup-container d-flex justify-content-center align-items-center">
+      <div className="signup-box shadow-lg rounded-4 overflow-hidden d-flex flex-md-row flex-column">
+        
+        {/* Left Panel */}
+        <div className="signup-left d-flex flex-column justify-content-center text-white p-4">
+          <h1 className="display-5 fw-bold text-center">Create Your Account</h1>
+        </div>
 
-          {/* Right Side - Signup Form */}
-          <div className="col-md-6 d-flex justify-content-center">
-            <div
-              className="card p-4"
-              style={{
-                width: "80%",
-                background: "rgba(255, 255, 255, 0.1)",
-                color: "white",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                backdropFilter: "blur(10px)",
-              }}
-            >
-              <h3 className="mb-3 text-center">Sign Up</h3>
+        {/* Right Panel */}
+        <div className="signup-right bg-dark text-white p-4">
+          <h3 className="text-center mb-3">Sign Up</h3>
 
-              <form onSubmit={handleSignup}>
-                {/* Full Name */}
-                <div className="mb-3">
-                  <label className="form-label">Full Name</label>
-                  <input type="text" className="form-control" placeholder="Enter Full Name" required />
-                </div>
+          <button className="btn btn-light w-100 mb-3">
+            <img src="https://img.icons8.com/color/16/google-logo.png" alt="Google" className="me-2" />
+            Sign up with Google
+          </button>
 
-                {/* Email Address */}
-                <div className="mb-3">
-                  <label className="form-label">Email Address</label>
-                  <input type="email" className="form-control" placeholder="Enter your email" required />
-                </div>
+          <hr className="text-secondary" />
 
-                {/* Password */}
-                <div className="mb-3">
-                  <label className="form-label">Password</label>
-                  <input type="password" className="form-control" placeholder="Enter Password" required />
-                </div>
-
-                {/* Phone Number */}
-                <div className="mb-3">
-                  <label className="form-label">Phone Number</label>
-                  <input type="tel" className="form-control" placeholder="Enter Phone Number" />
-                </div>
-
-                {/* Profile Picture Upload */}
-                <div className="mb-3">
-                  <label className="form-label">Upload Profile Picture</label>
-                  <input type="file" className="form-control" onChange={handleFileChange} />
-                  {profilePic && (
-                    <img
-                      src={profilePic}
-                      alt="Preview"
-                      className="mt-2 rounded-circle"
-                      width="80"
-                    />
-                  )}
-                </div>
-
-                {/* Terms & Conditions */}
-                <div className="mb-3 form-check">
-                  <input type="checkbox" className="form-check-input" id="termsCheck" required />
-                  <label className="form-check-label" htmlFor="termsCheck">
-                    I agree to the <a href="#">Terms & Conditions</a>
-                  </label>
-                </div>
-
-                {/* Signup Button */}
-                <button type="submit" className="btn btn-danger w-100">Sign Up</button>
-              </form>
-
-              {/* Already have an account? */}
-              <p className="mt-3 text-center">
-                Already have an account? <a href="/login" className="text-light">Log in</a>
-              </p>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-2">
+              <label className="form-label">Full Name</label>
+              <input type="text" className="form-control" name="fullName" onChange={handleChange} required />
             </div>
-          </div>
+
+            <div className="mb-2">
+              <label className="form-label">Email Address</label>
+              <input type="email" className="form-control" name="email" onChange={handleChange} required />
+            </div>
+
+            <div className="mb-2">
+              <label className="form-label">Password</label>
+              <input type="password" className="form-control" name="password" onChange={handleChange} required />
+            </div>
+
+            <div className="mb-2">
+              <label className="form-label">Phone Number</label>
+              <input type="tel" className="form-control" name="phone" onChange={handleChange} required />
+            </div>
+
+            <div className="mb-2">
+              <label className="form-label">Upload Profile Picture</label>
+              <input type="file" className="form-control" name="profilePic" accept="image/*" onChange={handleChange} />
+            </div>
+
+            <div className="form-check mb-3">
+              <input className="form-check-input" type="checkbox" name="agree" onChange={handleChange} />
+              <label className="form-check-label">
+                I agree to the <a href="#" className="text-info">Terms & Conditions</a>
+              </label>
+            </div>
+
+            <button type="submit" className="btn btn-danger w-100">Sign Up</button>
+          </form>
+
+          <p className="text-center mt-3">
+            Already have an account? <a href="/login" className="text-info">Log in</a>
+          </p>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Signup;

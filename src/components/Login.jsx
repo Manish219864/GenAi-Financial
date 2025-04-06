@@ -14,7 +14,7 @@ function Login() {
         <div className="row align-items-center">
           {/* Left Section - Welcome Text */}
           <div className="col-md-6 text-center">
-            <h1 className="display-3 fw-bold">Welcome to Cavani</h1>
+            <h1 className="display-3 fw-bold">Welcome to GenAi-Finance</h1>
           </div>
 
           {/* Right Section - Signup Box */}
